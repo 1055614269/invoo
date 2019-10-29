@@ -1,0 +1,157 @@
+
+.login {
+  // background-color: rgb(255, 255, 255);
+  height: 100vh;
+  width: 100%;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+  background-image: url("../../../static/img/login.png");
+  background-repeat: no-repeat;   //不重复
+  background-size: 100% 100%;     // 满屏
+
+  .yjlr{
+    position: relative;
+    float: right;
+    top: -30px;
+    right: -50px;
+  }
+  .login-user {
+    background-color: var(--themeColor);
+    width: 700px;
+    height: 340px;
+    position: fixed;
+
+    // background: #FFFFFF;
+    box-shadow: 0 2px 4px 0 rgba(192,192,192,0.50);
+    border-radius: 10px;
+
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+  }
+  .login-logo {
+    position: absolute;
+    left: 50%;
+    top: 20%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    height: 60px;
+    div{
+      float: left;
+      height: 100%;
+      line-height: 60px;
+      margin-right: 30px;
+      padding-left: 30px;
+      font-family: PingFangHK-Semibold;
+      font-size: 18px;
+      color: #464B55;
+      letter-spacing: 0;
+    }
+  }
+  .user-logo {
+    float: left;
+    width: 50%;
+    height: 100%;
+    padding: 24px;
+    // background-color: aqua
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .user-form {
+    float: right;
+    width: 50%;
+    height: 100%;
+    padding: 46px;
+    // background-color: antiquewhite
+
+    //输入框 css
+    /deep/.ant-input {
+        border-radius: 0px;
+        border: 0px solid #d9d9d9;
+        border-bottom: 1px solid #d9d9d9;
+        font-size: 14px;
+        background: transparent;
+    }
+    /deep/.ant-input:hover {
+      
+      border-color: #40a9ff !important;
+      border-right: 0px solid #40a9ff;
+      border-right-width: 0px !important;
+    }
+    /deep/.ant-input:focus {
+      border-color: #40a9ff;
+      outline: 0;
+      -webkit-box-shadow: 0 0 0 0 rgba(24, 144, 255, 0.2);
+      box-shadow: 0 0 0 rgba(24, 144, 255, 0.2);
+      border-right-width: 0px !important;
+    }
+    /deep/.ant-input-affix-wrapper{
+      font-size: 20px;
+      height: 40px !important;
+      &:hover{
+        border-right-width: 0px !important;
+      }
+    }
+    /deep/.ant-input-affix-wrapper .ant-input-prefix{
+      left: 2px ;
+
+    }
+    /deep/input:-internal-autofill-selected {
+      background-color: rgb(37, 92, 187) !important;
+      background-image: none !important;
+      color: rgb(0, 0, 0) !important;
+    }
+
+    // 记住密码 勾选框 css
+    // /deep/.has-error .ant-input-affix-wrapper .ant-input, .has-error .ant-input-affix-wrapper .ant-input:hover{
+    //   // border-color: #f5222d !important;
+    // }
+
+    // /deep/.ant-checkbox-wrapper:hover .ant-checkbox-inner, .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus + .ant-checkbox-inner{
+    //   // border-color: #ed5955;
+    // }
+    // /deep/.ant-checkbox-checked .ant-checkbox-inner {
+    //   // background-color: #ed5955;
+    //   // border-color: #ed5955;
+    // }
+
+
+    //登录按钮 css
+    /deep/.ant-btn-primary {
+      background-color: rgb(237, 89, 85);
+      border-color: rgb(237, 89, 85);
+      border-radius: 8px;
+      height: 46px;
+      width: 100%;
+    }
+
+  }
+  .zhmm {
+    font-family: PingFangSC-Semibold;
+    font-size: 20px;
+    color: #464B55;
+    letter-spacing: 0;
+    line-height: 20px;
+    float: left;
+  }
+  .yzm{
+    a{
+      float: right;
+      position: relative;
+      top:-40px;
+    }
+  }
+
+}
