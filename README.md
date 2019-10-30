@@ -41,6 +41,14 @@ npm install axios --save  或 yarn add axios
 #jquery
 npm install jquery --save  或 yarn add jquery
 
-81066089  
+
+```
+
+# 注意事项 node_modules 修改
+``` bash
+#安装了npm install --save xlsx-style
+会报错：This relative module was not found: ./cptable in ./node_modules/xlsx-style@0.8.13@xlsx-style/dist/cpexcel.js
+可以直接修改源码：
+在\node_modules\xlsx-style\dist\cpexcel.js 807行 的 var cpt = require(’./cpt’ + ‘able’); 改成 var cpt = cptable;
 
 ```

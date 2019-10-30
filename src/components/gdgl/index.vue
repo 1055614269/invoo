@@ -2,9 +2,6 @@
   <div id="gdgl">
     <div class="body">
       <div class="tj">
-
-
-        
         <span>
           工地信息：
           <a-input style="width: 150px;" placeholder="工地信息" />
@@ -147,7 +144,7 @@
         </div>
         <div class="nr">
           <span>施工阶段:</span>
-          <!-- <a-input v-model="addData.Construction_stage" placeholder="施工阶段" />
+          <!-- <a-input v-model="addData.Construction_stage" placeholder="施工阶段" /> 
           1：筹备中，2：施工中，2:施工完结
           -->
           <a-select defaultValue="1" style="width: 66%" @change="handleChange3">
@@ -315,7 +312,7 @@
         </div>
         <div class="nr">
           <span>施工阶段:</span>
-          <!-- <a-input v-model="addData.Construction_stage" placeholder="施工阶段" />
+          <!-- <a-input v-model="addData.Construction_stage" placeholder="施工阶段" /> 
           1：筹备中，2：施工中，2:施工完结
           -->
           <a-select defaultValue="1" style="width: 66%" @change="handleChange3">

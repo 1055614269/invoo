@@ -313,7 +313,12 @@
                   title="表格"
                   type="table"
                 />
-                <a-icon class="t-tb" title="导出数据" type="download" />
+                <a-icon
+                  class="t-tb"
+                  @click="exportToExcel(columns2,data2)"
+                  title="导出数据"
+                  type="download"
+                />
               </span>
             </div>
 
@@ -959,7 +964,32 @@ export default {
         this.GetDayEquipmentData(equipment_Id, Record_Time);
       }
     },
+    exportToExcel(columns, datalist) {
+      var tHeader = [];
+      var filterVal = [];
+      var data_list = [];
+      var name = "设备数据" + new Date().getTime();
+      var title = [["设备数据"], [new Date().Format("yyyy-MM-dd hh:mm:ss")]];
+      columns.map(function(_d) {
+        tHeader.push(_d.title);
+        filterVal.push(_d.dataIndex);
+      });
+      datalist.map(function(_d) {
+        _d.PM2_5 = parseFloat(_d.PM2_5);
+        _d.PM10 = parseFloat(_d.PM10);
+        _d.TSP = parseFloat(_d.TSP);
+        _d.air_pressure = parseFloat(_d.air_pressure);
+        _d.noise = parseFloat(_d.noise);
+        _d.temperature = parseFloat(_d.temperature);
+        _d.wind_direction = parseFloat(_d.wind_direction);
+        _d.wind_speed = parseFloat(_d.wind_speed);
+        _d.humidity = parseFloat(_d.humidity);
 
+        data_list.push(_d);
+      });
+
+      exportToExcel(tHeader, filterVal, data_list, name, title);
+    },
     ChangeDateSwitch(key) {
       this.spinning = true;
       this.option = {};

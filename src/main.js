@@ -9,6 +9,9 @@ import md5 from 'js-md5';
 import route from './components/route'
 // import $ from 'jquery'
 import axios from 'axios';
+// import FileSaver from "file-saver";
+// import XLSX from "xlsx";
+
 
 import AmazeVue from 'amaze-vue';
 import 'amaze-vue/dist/amaze-vue.css';
@@ -269,6 +272,48 @@ Date.prototype.Format = function (fmt) { //author: meizz
       fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
   return fmt;
 }
+
+/**
+ * 2019-10-29 17:21:35
+ * tHeader 头部名称
+ * filterVal 字段
+ * tableData 内容
+ * name excel名称 每日 当前时间（毫秒）
+ */
+window.exportToExcel = function (tHeader = [], filterVal = [], data_list = [], name = new Date().getTime(),title) {
+  //excel数据导出
+  require.ensure([], () => {
+    //   var data_list = [
+    //   {
+    //     index:1,
+    //     name:'name1'
+    //   },
+    //   {
+    //     index:2,
+    //     name:'name2'
+    //   }
+    // ]
+    const {
+      export_json_to_excel
+    } = require('../static/js/Export2Excel_1');
+    // const tHeader = ['序号','名称'];
+    // const filterVal = ['index','name'];
+    const list = data_list;
+    const data = formatJson(filterVal, list);
+
+    export_json_to_excel({
+      title: title,
+      header: tHeader,
+      data:data,
+      filename: name,
+      autoWidth: true,
+      bookType: "xlsx"
+    });
+  })
+};
+window.formatJson = function (filterVal, jsonData) {
+  return jsonData.map(v => filterVal.map(j => v[j]))
+};
 
 /* eslint-disable no-new */
 new Vue({
