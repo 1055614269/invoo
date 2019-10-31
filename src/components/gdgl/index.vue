@@ -368,13 +368,13 @@
               :span="12"
             >
           <a-form-item label="业主单位(甲方)" >
-              <a-input  v-model="Construction_protp"
+              <a-input
                 v-decorator="[ '业主单位(甲方)', { rules: [{ required: true, message: '业主单位(甲方)不得为空!'}] }]"
                 placeholder="业主单位(甲方)"
                 v-if="!changeStart">
               </a-input>
               <span v-if="changeStart">{{addData.Construction_protp}}</span>
-            <a-popover title="" trigger="click" placement="rightTop">
+            <a-popover title="" trigger="click" placement="rightTop"  v-if="changeStart">
               <template slot="content" style="width: 300px;text-align: center">
                 <!--                <a-card hoverable style="width: 300px;text-align: center"   :title="title">-->
                 <div style="">
@@ -382,11 +382,11 @@
                     <a-avatar
                       slot="avatar"
                       src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                      style="position: absolute;left: 50%;margin-left: -50px; width:100px;height: 50px"
+                      style="margin-left:100px;margin-top:50px;height: 50px"
 
                     />
                   </a-card-meta>
-                  <p style="margin-top: 60px;text-align: center">杭州宏润建设工程集团</p>
+                  <p style="margin-top: 40px;text-align: center">杭州宏润建设工程集团</p>
                   <p style="text-align: center">张宏润</p>
                   <div style="border-bottom: 1px solid black;padding:8px;text-align: center;margin-top:10px;margin-left: 10px"><a-icon type="phone" /><span style="margin-right:10px;margin-left:5px">0571*******</span><a-icon type="eye-invisible" /></div>
                   <div style="border-bottom: 1px solid black;padding:8px;text-align: center;argin-left: 10px"><a-icon type="mobile" /><span style="margin-right:5px;margin-left:10px">1871330****</span><a-icon type="eye-invisible" /></div>
@@ -408,7 +408,7 @@
                 v-if="!changeStart">
               </a-input>
               <span v-if="changeStart">{{addData.Construction_type}}</span>
-            <a-popover title="" trigger="click" placement="rightTop">
+            <a-popover title="" trigger="click" placement="rightTop" v-if="changeStart">
               <template slot="content" style="width: 300px;text-align: center">
 <!--                <a-card hoverable style="width: 300px;text-align: center"   :title="title">-->
                   <div style="">
@@ -416,11 +416,11 @@
                       <a-avatar
                         slot="avatar"
                         src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                        style="position: absolute;left: 50%;margin-left: -50px; width:100px;height: 50px"
+                        style="margin-left:100px; margin-top:50px;height: 50px"
 
                       />
                     </a-card-meta>
-                    <p style="margin-top: 60px;text-align: center">杭州宏润建设工程集团</p>
+                    <p style="margin-top: 40px;text-align: center">杭州宏润建设工程集团</p>
                     <p style="text-align: center">张宏润</p>
                     <div style="border-bottom: 1px solid black;padding:8px;text-align: center;margin-top:10px;margin-left: 10px"><a-icon type="phone" /><span style="margin-right:10px;margin-left:5px">0571*******</span><a-icon type="eye-invisible" /></div>
                     <div style="border-bottom: 1px solid black;padding:8px;text-align: center;argin-left: 10px"><a-icon type="mobile" /><span style="margin-right:5px;margin-left:10px">1871330****</span><a-icon type="eye-invisible" /></div>
@@ -452,7 +452,7 @@
                 v-if="!changeStart">
               </a-input>
               <span v-if="changeStart">{{addData.Construction_boss}}</span>
-            <a-popover title="" trigger="click" placement="rightTop">
+            <a-popover title="" trigger="click" placement="rightTop" v-if="changeStart">
               <template slot="content" style="width: 300px;text-align: center">
                 <!--                <a-card hoverable style="width: 300px;text-align: center"   :title="title">-->
                 <div style="">
@@ -460,11 +460,11 @@
                     <a-avatar
                       slot="avatar"
                       src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                      style="position: absolute;left: 50%;margin-left: -50px; width:100px;height: 50px"
+                      style="margin-left:100px;margin-top:50px; height: 50px"
 
                     />
                   </a-card-meta>
-                  <p style="margin-top: 60px;text-align: center">杭州宏润建设工程集团</p>
+                  <p style="margin-top: 40px;text-align: center">杭州宏润建设工程集团</p>
                   <p style="text-align: center">张宏润</p>
                   <div style="border-bottom: 1px solid black;padding:8px;text-align: center;margin-top:10px;margin-left: 10px"><a-icon type="phone" /><span style="margin-right:10px;margin-left:5px">0571*******</span><a-icon type="eye-invisible" /></div>
                   <div style="border-bottom: 1px solid black;padding:8px;text-align: center;argin-left: 10px"><a-icon type="mobile" /><span style="margin-right:5px;margin-left:10px">1871330****</span><a-icon type="eye-invisible" /></div>
