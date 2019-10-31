@@ -108,7 +108,7 @@
           <a-dropdown>
             <!-- <span style="font-size: 26px;cursor: default;">...</span> -->
              <span class="an1" style="font-size: 24px;cursor: default;">
-              <b style="color:#2d75f0">·</b> 
+              <b style="color:#2d75f0">·</b>
               <b style="color:red">·</b>
               <b style="color:#00bd74">·</b>
             </span>
@@ -344,8 +344,8 @@
           <a-col
             :span="12"
           >
-            <a-form-item label="报建编号" >
-              <a-input  v-model="addData.Construction_name"
+            <a-form-item label="报建编号:    " >
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a-input  v-model="addData.Construction_name"
                 v-decorator="[ '报建编号', { rules: [{ required: true, message: '报建编号不得为空!'}] }]"
                 placeholder="报建编号"
                 v-if="!changeStart"
@@ -372,7 +372,7 @@
             <a-col
               :span="12"
             >
-          <a-form-item label="业主单位(甲方)" >
+          <a-form-item label="业主单位" >
               <a-input
                 v-decorator="[ '业主单位(甲方)', { rules: [{ required: true, message: '业主单位(甲方)不得为空!'}] }]"
                 placeholder="业主单位(甲方)"
@@ -405,7 +405,7 @@
           </a-form-item>
             </a-col>
             <a-col :span="12">
-          <a-form-item label="施工单位(乙方)" >
+          <a-form-item label="施工单位" >
 
               <a-input
                 v-decorator="[ '施工单位(乙方)', { rules: [{ required: true, message: '施工单位(乙方)不得为空!'}] }]"
