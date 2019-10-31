@@ -459,7 +459,7 @@
                       <b style="color:#00bd74">.</b>
                     </a-button>
                     <!-- <div class="an1" style="font-size: 26px;cursor: default;">
-                     
+
                     </div>-->
                     <a-menu slot="overlay">
                       <a-menu-item key="0">
@@ -501,13 +501,13 @@
 
               <!-- <table id="table-sparkline"> -->
               <!-- <thead>
-                  
+
               </thead>-->
               <!-- <tbody id="tbody-sparkline"> -->
 
               <!-- <tr>
                   <td data-sparkline="87,44,74,41"></td>
-              
+
                   <td>
                   <a-button type="primary" icon="sound" @click="visible=true" :size="'large'">通知</a-button>
                   </td>
@@ -612,7 +612,7 @@
                         <b style="color:#00bd74">.</b>
                       </a-button>
                       <!-- <div class="an1" style="font-size: 26px;cursor: default;">
-                     
+
                       </div>-->
                       <a-menu slot="overlay">
                         <a-menu-item key="0">
@@ -711,7 +711,7 @@
             <!-- <a-tabs @change>
               <a-tab-pane key="1"></a-tab-pane>
               <a-tab-pane key="2">
-               
+
             </a-tab-pane>-->
 
             <!-- <a-tab-pane tab="绿色排行" key="3">绿色排行</a-tab-pane> -->

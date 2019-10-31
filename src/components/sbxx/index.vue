@@ -1,8 +1,8 @@
 <template>
   <div id="sbxx">
     <div class="t">
-      <span @click="deviceInformation" :class="change==1?'record':''">设备信息</span>
-      <span @click="historicalData" :class="change==2?'record':''">历史数据</span>
+      <span @click="deviceInformation" :class="change==1?'record':''">全部数据</span>
+      <span @click="historicalData" :class="change==2?'record':''">数据显示</span>
       <div v-if="change===1" class="fb" @click="visible2=true">
         添加设备
       </div>
@@ -83,7 +83,7 @@
               <!-- 1:正常,2:故障,3:超标,4:离线,5:维修,6:迁移,7:报废 -->
             </a-select>
           </span>
-          <!-- <span>  
+          <!-- <span>
             设备名称：
               IsOnLine:"-1",
       RecordType_type:"-1",
@@ -122,6 +122,7 @@
               >{{val.County_Id}}</a-select-option>
             </a-select>
           </div>
+
           <div slot="IsOnLine" slot-scope="IsOnLine,data">{{IsOnLine==1?'在线':'离线'}}</div>
         </a-table>
         <br />
@@ -137,31 +138,49 @@
         <div class="tj">
           <!-- <a-input v-model="construction_SN" style="width: 150px;" placeholder="设备" /> -->
           <span>
-            设备：
-            <a-select
-              defaultValue
-              placeholder="设备筛选"
-              optionFilterProp="children"
-              style="width: 200px"
-              @change="handleChange"
-            >
-              <a-select-option autofocus :value="''">全部</a-select-option>
-              <a-select-option
-                :key="key"
-                v-for="(val,key) in equipmentNames"
-                :value="val.equipment_UId"
-              >{{val.equipment_name}}</a-select-option>
-            </a-select>
-          </span>
-
-          <span>
-            时间段：
-            <a-range-picker
-              @change="onChangeDate"
-              :showTime="{ format: 'HH:mm' }"
-              format="YYYY-MM-DD HH:mm"
-              :placeholder="['开始时间', '结束时间']"
-            />
+             <span>
+            工地名称:
+               <a-input style="width: 150px;" placeholder="工地名称" />
+             </span>
+            <span>
+              MN码:
+               <a-input style="width: 150px;" placeholder="MN码" />
+             </span>
+              <span>
+          区域：
+          <a-select
+            defaultValue="全部"
+            placeholder="区域"
+            optionFilterProp="children"
+            style="width: 150px"
+            @change="(val)=>handleChange(val,clearFilters)"
+          >
+            <a-select-option :value="全部">全部</a-select-option>
+            <a-select-option
+              :key="key"
+              v-for="(val,key) in CityList"
+              :value="val.County_Id"
+            >{{val.County_Id}}</a-select-option>
+          </a-select>
+              </span>
+               <span>
+          状态：
+          <a-select
+            defaultValue="全部"
+            placeholder="状态"
+            optionFilterProp="children"
+            style="width: 150px"
+            @change="(val)=>handleChangeState(val,clearFilters)"
+          >
+            <a-select-option :value="全部">全部</a-select-option>
+            <a-select-option
+              :key="key"
+              v-for="(val,key) in stateList"
+              :value="val"
+            >{{val}}</a-select-option>
+          </a-select>
+              </span>
+          <a-button type="primary" @click="" style="margin-left: 8px">查询</a-button>
           </span>
 
           <a-button type="primary" @click="GetEquipmentHistoryData" style="margin-left: 8px">查询</a-button>
@@ -219,7 +238,7 @@
             :label-col="{ span: 9 }"
             :wrapper-col="{ span: 12 }"
             label="所属工地"
-           
+
           >
             <a-select
               v-decorator="[
@@ -338,7 +357,19 @@ const columns = [
   {
     title: "设备编号",
     dataIndex: "MN",
-    key: "99",
+    key: "MN",
+    width: 250
+  },
+  {
+    title: "区域",
+    dataIndex: "区域",
+    key: "区域",
+    width: 150
+  },
+  {
+    title: "所属工地",
+    dataIndex: "所属工地",
+    key: "所属工地",
     width: 250
   }
   // {
@@ -445,7 +476,7 @@ const data = [
 
 const columns2 = [
   {
-    title: "设备唯一标识码",
+    title: "设备编号",
     dataIndex: "equipment_UId",
     // sorter: (a, b) => a.air_pressure - b.air_pressure,
     key: "99",
@@ -458,6 +489,20 @@ const columns2 = [
     key: "1",
     width: 160
   },
+  {
+    title: "数量",
+    dataIndex: "",
+    // sorter: (a, b) => a.TSP - b.TSP,
+    key: "",
+    width: 160
+  },
+  {
+    title: "所属工地",
+    dataIndex: "Construction_Id",
+    // sorter: (a, b) => a.TSP - b.TSP,
+    key: "6",
+    width: 160
+  },
   // {
   //   title: "市级",
   //   dataIndex: "City_Id",
@@ -465,33 +510,33 @@ const columns2 = [
   //   key: "_1",
   //   width: 160
   // },
+  // {
+  //   title: "区域",
+  //   dataIndex: "County_Id",
+  //   // sorter: (a, b) => a.PM10 - b.PM10,
+  //   key: "_2",
+  //   width: 70,
+  //   scopedSlots: {
+  //     filterDropdown: "filterDropdown",
+  //     filterIcon: "filterIcon",
+  //     customRender: "customRender"
+  //   },
+  //   onFilter: (value, record) =>
+  //     record.name.toLowerCase().includes(value.toLowerCase()),
+  //   onFilterDropdownVisibleChange: visible => {
+  //     if (visible) {
+  //     }
+  //   }
+  // },
   {
-    title: "区域",
-    dataIndex: "County_Id",
-    // sorter: (a, b) => a.PM10 - b.PM10,
-    key: "_2",
-    width: 70,
-    scopedSlots: {
-      filterDropdown: "filterDropdown",
-      filterIcon: "filterIcon",
-      customRender: "customRender"
-    },
-    onFilter: (value, record) =>
-      record.name.toLowerCase().includes(value.toLowerCase()),
-    onFilterDropdownVisibleChange: visible => {
-      if (visible) {
-      }
-    }
-  },
-  {
-    title: "设备杆编号",
+    title: "状态",
     dataIndex: "equipment_bnum",
     // sorter: (a, b) => a.PM2_5 - b.PM2_5,
     key: "3",
     width: 100
   },
   {
-    title: "MN码",
+    title: "协议类型",
     dataIndex: "equipment_MNnum",
     // sorter: (a, b) => a.noise - b.noise,
     key: "4",
@@ -518,28 +563,28 @@ const columns2 = [
   //     key: "7",
   //     width: 100
   //   },
-  {
-    title: "是否在线",
-    dataIndex: "IsOnLine",
-    scopedSlots: { customRender: "IsOnLine" },
-    // sorter: (a, b) => a.humidity - b.humidity,
-    key: "8",
-    width: 100
-  },
-  {
-    title: "设备状态",
-    dataIndex: "record_type_name",
-    // sorter: (a, b) => a.humidity - b.humidity,
-    key: "9",
-    width: 100
-  },
-  {
-    title: "设备类型",
-    dataIndex: "equipment_type",
-    // sorter: (a, b) => a.humidity - b.humidity,
-    key: "10",
-    width: 100
-  }
+  // {
+  //   title: "是否在线",
+  //   dataIndex: "IsOnLine",
+  //   scopedSlots: { customRender: "IsOnLine" },
+  //   // sorter: (a, b) => a.humidity - b.humidity,
+  //   key: "8",
+  //   width: 100
+  // },
+  // {
+  //   title: "设备状态",
+  //   dataIndex: "record_type_name",
+  //   // sorter: (a, b) => a.humidity - b.humidity,
+  //   key: "9",
+  //   width: 100
+  // },
+  // {
+  //   title: "设备类型",
+  //   dataIndex: "equipment_type",
+  //   // sorter: (a, b) => a.humidity - b.humidity,
+  //   key: "10",
+  //   width: 100
+  // }
 ];
 const data2 = [
   //   {
@@ -571,8 +616,10 @@ export default {
   data() {
     return {
       typeName: "设备信息",
-      form: this.$form.createForm(this),
       CityList: [],
+      stateList:['正常','在线','离线','故障'],
+      form: this.$form.createForm(this),
+      // CityList: [],
       equipment_UId: "", //设备编号
       //   equipmentName: "", //设备名称
       equipmentNames: [], //设备名称集合
@@ -618,6 +665,36 @@ export default {
   //加载后执行
   mounted() {},
   methods: {
+    //获取城市列表
+    GetCityList() {
+      var _this = this;
+      new util._httpData(
+        this,
+        "Construction/GetCityList",
+        {}
+      ).then = function () {
+        if (this.state) {
+          // _this.CityList = this.datas;
+          this.datas.map(_d => {
+            _d.countyList.map(data => {
+              _this.CityList.push({County_Id: data.County_Id});
+            });
+          });
+        } else {
+          _this.$message.error(this.message, 4);
+        }
+      };
+    },
+    handleChange(val, clearFilters) {
+      clearFilters();
+      this.searchText = val;
+      // this.County_Id = val;
+      this.getExceedingEquipments(
+        val,
+        this.current,
+        this.ExceedingEquipmentPagesize
+      );
+    },
     onchange(current) {
       this.current = current;
       this.GetEquipmentHistoryData();

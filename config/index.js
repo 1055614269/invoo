@@ -17,12 +17,12 @@ module.exports = {
         // target: "http://10.3.0.87/api",
         changeOrigin: true,
         pathRewrite: {
-          '^/api': ''//这里理解成用‘/api’代替target里面的地址，后面组件中我们掉接口时直接用api代替 
+          '^/api': ''//这里理解成用‘/api’代替target里面的地址，后面组件中我们掉接口时直接用api代替
         }
       },
     },
     // Various Dev Server settings
-    host: '192.168.1.16', // can be overwritten by process.env.HOST localhost
+    host: '192.168.1.26', // can be overwritten by process.env.HOST localhost
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,
