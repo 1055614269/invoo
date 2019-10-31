@@ -16,7 +16,7 @@
           <a-sub-menu
             v-show="Role_Id<=2"
             :class="(Keys[0]==='jrcb'||Keys[0]==='lscb'||Keys[0]==='sbsj')?'xz':'_xz'"
-            title="数据管理"
+            :title="Keys[0]==='sbsj'?'设备数据':Keys[0]==='jrcb'?'今日超标':Keys[0]==='lscb'?'七天超标':'数据管理'"
             key="jrcb"
           >
             <a-menu-item key="sbsj">设备数据</a-menu-item>
@@ -30,7 +30,7 @@
           <a-sub-menu
             v-show="Role_Id<=2"
             :class="(Keys[0]==='gdgl'||Keys[0]==='sbxx')?'xz':'_xz'"
-            title="工地管理"
+            :title="Keys[0]==='gdgl'?'工地信息':Keys[0]==='sbxx'?'设备信息':'工地管理'"
             key="gdgl"
           >
             <a-menu-item v-show="Role_Id<=2" key="gdgl">工地信息</a-menu-item>
@@ -99,16 +99,20 @@
     </a-modal>
     <!-- 聊天系统 SRTAT-->
     <div class="user_chat_content">
-      <div class="user_list" @click="on_chat_Interface">
+      <!-- <div class="user_list" @click="on_chat_Interface">
         <a-icon type="team" />
-      </div>
+      </div> -->
       <div class="user_list">
         <a-popover placement="leftTop">
           <template slot="content">
             <!-- <p>Content</p>
             <p>Content</p>-->
             <div class="user_contact_list">
-              <div class="uset_list_name">
+              <div class="uset_list_name"
+               v-for="(val,key) in Users"
+            :key="key"
+            @click="onChoice(val,val.id);on_chat_Interface()"
+              >
                 <i style="float: left;">
                   <a-avatar
                     src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571395506097&di=776363525de1f02344c10fc83b034de7&imgtype=0&src=http%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201504%2F13%2F20150413H5949_CWaPL.thumb.700_0.jpeg"
@@ -116,8 +120,14 @@
                 </i>
                 <div style="float: left;">
                   <div class="user_name_tp">
-                    <a-badge status="default" />
-                    离线 {{"用户1"}}
+                    <!-- <a-badge status="default" /> -->
+                  <span v-if="val.online">
+                    [在线]
+                  </span>
+                  <span v-if="!val.online">
+                    [离线]
+                  </span>
+                     {{val.userName}}
                   </div>
                 </div>
               </div>
@@ -179,12 +189,11 @@
                     </div>
                   </div>
                 </li>
-                <li
+                <!-- <li
                   v-for="(val,key) in Users"
                   :key="key"
                   @click="onChoice(val,val.id)"
-                  :class="val.Choice?'user_name_content is_current_type':'user_name_content'"
-                >
+                  :class="val.Choice?'user_name_content is_current_type':'user_name_content'">
                   <div class="user_bk">
                     <i class="user_name">
                       <a-avatar
@@ -203,7 +212,7 @@
                       </div>
                     </div>
                   </div>
-                </li>
+                </li> -->
               </ul>
             </a-collapse-panel>
             <a-collapse-panel header="中控集团" key="2" class="customStyle">
@@ -620,7 +629,7 @@ export default {
       this.userData = _d;
     },
     on_chat_Interface() {
-      this.chat_Interface = !this.chat_Interface;
+      this.chat_Interface = true;
       let dv, _dv, interval;
       let dom = function() {
         //鼠标按下

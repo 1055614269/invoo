@@ -26,20 +26,21 @@
         :dataSource="ExceedingEquipment"
         :expandedRowKeys="expandedRowKeys"
         @expand="expand"
-      
         class="table"
-        :pagination="false">
+        :pagination="false"
+      >
         <div
           slot="filterDropdown"
           slot-scope="{ setSelectedKeys, selectedKeys, confirm, clearFilters, column }"
-          class="custom-filter-dropdown" >
-
+          class="custom-filter-dropdown"
+        >
           <a-select
             defaultValue
             placeholder="区域"
             optionFilterProp="children"
             style="width: 188px; margin-bottom: 8px; display: block;"
-            @change="(val)=>handleChange(val,clearFilters)">
+            @change="(val)=>handleChange(val,clearFilters)"
+          >
             <a-select-option :value="''">全部</a-select-option>
             <a-select-option
               :key="key"
@@ -79,7 +80,12 @@
         <!-- <div slot="cb" slot-scope="cd,data">1.111</div> -->
         <div slot="cz" slot-scope="cz,data">
           <a-dropdown>
-            <span style="font-size: 26px;cursor: default;">...</span>
+            <!-- <span style="font-size: 26px;cursor: default;">...</span> -->
+             <span class="an1" style="font-size: 24px;cursor: default;">
+              <b style="color:#2d75f0">·</b> 
+              <b style="color:red">·</b>
+              <b style="color:#00bd74">·</b>
+            </span>
             <a-menu slot="overlay">
               <a-menu-item key="0">
                 <div
@@ -99,7 +105,7 @@
                 <div
                   class="b-img4"
                   target="_blank"
-                  @click="visible=true"
+                  @click="visible2=true"
                   rel="noopener noreferrer"
                 >发送通知</div>
               </a-menu-item>
@@ -152,6 +158,14 @@
         showSizeChanger
       />
     </span>
+    <a-modal title="通知给：前滩40-01地块项目" centered v-model="visible2" @ok="handleOk" :bodyStyle="{}">
+      <a-textarea placeholder="请输入通知内容" :rows="6" />
+      <br />
+      <br />
+      <a-checkbox @change="onChangeDx">短信通知: 15021345644</a-checkbox>
+      <br />
+      <a-checkbox @change="onChangeDx">微信推送</a-checkbox>
+    </a-modal>
   </div>
 </template>
 
@@ -267,6 +281,7 @@ export default {
       columns, //表格字段
       current: 1, //分页第几页
       expandedRowKeys: [""],
+      visible2: false,
       ExceedingEquipment: [],
       ExceedingEquipmentPagesize: 10,
       ExceedingEquipmentPageno: 1,
@@ -276,7 +291,7 @@ export default {
           dataIndex: "Construction_Name",
           title: "名称",
           scopedSlots: { customRender: "Construction_Name" },
-         width: 400,
+          width: 400
         },
         {
           dataIndex: "County_Id",
@@ -336,6 +351,14 @@ export default {
     onchange(current) {
       this.current = current;
       this.PageAttention();
+    },
+    handleOk(e) {
+      console.log(e);
+      this.visible2 = false;
+    },
+    noticeOk(_d) {},
+    onChangeDx(e) {
+      console.log(`checked ----= ${e.target.checked}`);
     },
     expand(r, val) {
       // this.expandedRowKeys = [val.key];
@@ -523,7 +546,7 @@ export default {
             year: "%Y"
           },
           borderWidth: 1,
-          backgroundColor: "#ffffff99",
+          backgroundColor: "#ffffff",
           headerFormat:
             '<span style="font-size:10px">{point.key}</span><table>',
           pointFormat:
@@ -566,7 +589,7 @@ export default {
                     x2: 0,
                     y2: 1
                   },
-                  stops: [[0, "#ff0000"], [1, "#f600ff"]]
+                  stops: [[0, "#ff0000"], [0, "#ff8080"]]
                 },
                 lineWidth: 2,
                 // states: {
@@ -607,7 +630,7 @@ export default {
                     x2: 0,
                     y2: 1
                   },
-                  stops: [[0, "#2f93fa"], [1, "#7ecef1"]]
+                  stops: [[0, "#007eff"], [1, "#7ecef1"]]
                 },
                 name: "PM10",
                 data: types[type]
@@ -622,7 +645,7 @@ export default {
                     x2: 0,
                     y2: 1
                   },
-                  stops: [[0, "rgb(221 242 243)"], [1, "#ffffff99"]]
+                  stops: [[0, "#ddf2f3"], [1, "#ffffff99"]]
                 },
                 marker: {
                   radius: 0
@@ -642,7 +665,7 @@ export default {
                     x2: 0,
                     y2: 1
                   },
-                  stops: [[0, "rgb(112, 192, 219)"], [1, "rgb(125, 210, 192)"]]
+                  stops: [[0, "#00ffb8"], [1, "#6afbdc"]]
                 },
                 name: "PM2.5",
                 data: types[type]
@@ -874,7 +897,7 @@ export default {
                   x2: 0,
                   y2: 1
                 },
-                stops: [[0, "#ff0000"], [1, "#f600ff"]]
+                stops: [[0, "#ff0000"], [0, "#ff8080"]]
               },
               marker: {
                 radius: 0

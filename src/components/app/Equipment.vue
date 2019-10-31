@@ -253,7 +253,7 @@ export default {
                 x2: 0,
                 y2: 1
               },
-              stops: [[0, "#2f93fa"], [1, "#ffffff99"]]
+              stops: [[0, "#007eff"], [1, "#ffffff99"]]
             },
             marker: {
               radius: 0
@@ -272,7 +272,7 @@ export default {
                 x2: 0,
                 y2: 1
               },
-              stops: [[0, "#2f93fa"], [1, "#7ecef1"]]
+              stops: [[0, "#007eff"], [1, "#7ecef1"]]
             },
             lineWidth: 2,
             name: "PM10",
@@ -286,7 +286,7 @@ export default {
                 x2: 0,
                 y2: 1
               },
-              stops: [[0, "rgb(221 242 243)"], [1, "#ffffff99"]]
+              stops: [[0, "#ddf2f3"], [1, "#ffffff99"]]
             },
             marker: {
               radius: 0
@@ -306,7 +306,7 @@ export default {
                 x2: 0,
                 y2: 1
               },
-              stops: [[0, "rgb(112, 192, 219)"], [1, "rgb(125, 210, 192)"]]
+              stops: [[0, "#00ffb8"], [1, "#6afbdc"]]
             },
             name: "PM2.5",
             data: data2
@@ -338,7 +338,7 @@ export default {
                 x2: 0,
                 y2: 1
               },
-              stops: [[0, "#ff0000"], [1, "#f600ff"]]
+              stops: [[0, "#ff0000"], [0, "#ff8080"]]
             },
             lineWidth: 2,
             name: "TSP",

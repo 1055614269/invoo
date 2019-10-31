@@ -145,7 +145,12 @@
         </span>
         <div slot="cz" slot-scope="cz,data">
           <a-dropdown>
-            <span style="font-size: 26px;cursor: default;">...</span>
+            <span class="an1" style="font-size: 24px;cursor: default;">
+              <b style="color:#2d75f0">·</b> 
+              <b style="color:red">·</b>
+              <b style="color:#00bd74">·</b>
+            </span>
+
             <a-menu slot="overlay">
               <a-menu-item key="0">
                 <div
@@ -610,7 +615,7 @@ export default {
             year: "%Y"
           },
           borderWidth: 1,
-          backgroundColor: "#ffffff99",
+          backgroundColor: "#ffffff",
           headerFormat:
             '<span style="font-size:10px">{point.key}</span><table>',
           pointFormat:
@@ -653,7 +658,7 @@ export default {
                     x2: 0,
                     y2: 1
                   },
-                  stops: [[0, "#ff0000"], [1, "#f600ff"]]
+                  stops: [[0, "#ff0000"], [0, "#ff8080"]]
                 },
                 lineWidth: 2,
                 // states: {
@@ -694,7 +699,7 @@ export default {
                     x2: 0,
                     y2: 1
                   },
-                  stops: [[0, "#2f93fa"], [1, "#7ecef1"]]
+                  stops: [[0, "#007eff"], [1, "#7ecef1"]]
                 },
                 name: "PM10",
                 data: types[type]
@@ -709,7 +714,7 @@ export default {
                     x2: 0,
                     y2: 1
                   },
-                  stops: [[0, "rgb(221 242 243)"], [1, "#ffffff99"]]
+                  stops: [[0, "#ddf2f3"], [1, "#ffffff99"]]
                 },
                 marker: {
                   radius: 0
@@ -729,7 +734,7 @@ export default {
                     x2: 0,
                     y2: 1
                   },
-                  stops: [[0, "rgb(112, 192, 219)"], [1, "rgb(125, 210, 192)"]]
+                  stops: [[0, "#00ffb8"], [1, "#6afbdc"]]
                 },
                 name: "PM2.5",
                 data: types[type]
@@ -942,7 +947,7 @@ export default {
                   x2: 0,
                   y2: 1
                 },
-                stops: [[0, "#ff0000"], [1, "#f600ff"]]
+                stops: [[0, "#ff0000"], [0, "#ff8080"]]
               },
               marker: {
                 radius: 0

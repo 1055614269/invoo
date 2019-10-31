@@ -9,8 +9,6 @@ import md5 from 'js-md5';
 import route from './components/route'
 // import $ from 'jquery'
 import axios from 'axios';
-// import FileSaver from "file-saver";
-// import XLSX from "xlsx";
 
 
 import AmazeVue from 'amaze-vue';
@@ -84,9 +82,9 @@ import '../static/css/antd.css';
 Vue.use(DatePicker);
 
 // 移动端
-// import Vant from 'vant';
-// import 'vant/lib/index.css';
-// Vue.use(Vant);
+import Vant from 'vant';
+import 'vant/lib/index.css';
+Vue.use(Vant);
 
 
 // import { BaiduMap } from './custom/map.js'; //百度地图

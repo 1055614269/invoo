@@ -7,7 +7,7 @@
         <span class="fh">
           <!-- <a-icon style="color:red" type="left" /> -->
           {{informationData.name}}
-          <a-badge :status="EquipmentState?'default':'success'" style text />
+          <a-badge :status="EquipmentState?'default':'success'" style="" text />
           <!-- <a-badge :numberStyle= "{color: '#52c41a'} " text="正常" /> -->
         </span>
         <span style="float: right;">
@@ -908,6 +908,9 @@ for (let code in locationData) {
     })
   );
 }
+let preIcon = {};
+
+let clickIcon = {};
 var direction = function(op, s) {
   if (s <= 0.2) {
     return "静风";
@@ -1021,7 +1024,7 @@ export default {
       {
         title: "数据均值",
         dataIndex: "TSP",
-         scopedSlots: { customRender: "TSP" },
+        scopedSlots: { customRender: "TSP" },
         width: 100
       },
       {
@@ -1350,7 +1353,7 @@ export default {
             year: "%Y"
           },
           borderWidth: 1,
-          backgroundColor: "#ffffff99",
+          backgroundColor: "#ffffff",
           headerFormat:
             '<span style="font-size:10px">{point.key}</span><table>',
           pointFormat:
@@ -1390,7 +1393,7 @@ export default {
                 x2: 0,
                 y2: 1
               },
-              stops: [[0, "#ff0000"], [1, "#f600ff"]]
+              stops: [[0, "#ff0000"], [0, "#ff8080"]]
             },
             lineWidth: 2,
             // states: {
@@ -1429,7 +1432,7 @@ export default {
                 x2: 0,
                 y2: 1
               },
-              stops: [[0, "#2f93fa"], [1, "#7ecef1"]]
+              stops: [[0, "#007eff"], [1, "#7ecef1"]]
             },
             name: "PM10",
             data: data3
@@ -1442,7 +1445,7 @@ export default {
                 x2: 0,
                 y2: 1
               },
-              stops: [[0, "rgb(221 242 243)"], [1, "#ffffff99"]]
+              stops: [[0, "#ddf2f3"], [1, "#ffffff99"]]
             },
             marker: {
               radius: 0
@@ -1462,7 +1465,7 @@ export default {
                 x2: 0,
                 y2: 1
               },
-              stops: [[0, "rgb(112, 192, 219)"], [1, "rgb(125, 210, 192)"]]
+              stops: [[0, "#00ffb8"], [1, "#6afbdc"]]
             },
             name: "PM2.5",
             data: data2
@@ -1530,7 +1533,6 @@ export default {
           DataList.map((_d, key) => {
             var cityName = "";
             var cities = {};
-
             var data = {
               name: _d.City_Id,
               County_Id: _d.City_Id,
@@ -1912,7 +1914,7 @@ export default {
         }
       }, 100);
     },
-    FirstEquipmentData(equipment_Id, e) {
+    FirstEquipmentData(equipment_Id, e,isInfo) {
       var _this = this;
       new util._httpData(_this, "Construction/FirstEquipmentData", {
         equipment_Id: equipment_Id
@@ -1959,7 +1961,14 @@ export default {
           _this.humidity.push([dateTime, humidity]); //湿度
 
           // _this.IsExceedingTSP = _this.intervalData.IsExceedingTSP
-
+          e.color = TSP >= 500 ? "#ea1446" : e.color;
+          e.target.type = TSP >= 500 ? 3 : e.target.type
+          if (e.Selection) {
+            e.target.setIcon(clickIcon[e.target.type]);
+          } else {
+            e.target.setIcon(preIcon[e.target.type]);
+          }
+          if(isInfo) return false;
           if (_this.$refs.option1) {
             var Series = _this.$refs.option1.chart;
 
@@ -2020,9 +2029,7 @@ export default {
         pagesize: 10
       }).then = function() {
         if (this.state) {
-
           _this.ExceedingEquipment = this.data.Data.listExceedingConstruction;
-
 
           var deleteDataList = function(list) {
             for (var key in list) {
@@ -2285,7 +2292,7 @@ export default {
         var infoWindow = new AMap.InfoWindow({
           // anchor: "bottom-center",
           isCustom: true,
-          offset: new AMap.Pixel(3, -30)
+          offset: new AMap.Pixel(3, -38)
         });
         function markerClick(e) {
           // infoWindow.setContent(e.target.content);
@@ -2361,7 +2368,7 @@ export default {
                 : "-") +
               " (kPa)</div>"
           );
-          content.push("<dd>工地名称： " + e.Construction_name + "</dd>");
+          // content.push("<dd>工地名称： " + e.Construction_name + "</dd>");
           // style='color:red'
           infoWindow.setContent(
             createInfoWindow(e.target.content, content.join(""), e)
@@ -2369,68 +2376,6 @@ export default {
 
           infoWindow.open(map, e.target.getPosition());
         }
-
-        var preIcon = {
-          1: new AMap.Icon({
-            image: "../../static/img/BJ_1.png",
-            size: new AMap.Size(32, 38), //图标大小
-            imageSize: new AMap.Size(32, 38),
-            color: "#00bd74",
-            type: "正常"
-          }),
-          2: new AMap.Icon({
-            image: "../../static/img/BJ_2.png",
-            size: new AMap.Size(32, 38), //图标大小
-            imageSize: new AMap.Size(32, 38),
-            color: "#f77a00",
-            type: "故障"
-          }),
-          3: new AMap.Icon({
-            image: "../../static/img/BJ_3.png",
-            size: new AMap.Size(32, 38), //图标大小
-            imageSize: new AMap.Size(32, 38),
-            color: "#ea1446",
-            type: "超标"
-          }),
-          4: new AMap.Icon({
-            image: "../../static/img/BJ_4.png",
-            size: new AMap.Size(32, 38), //图标大小
-            imageSize: new AMap.Size(32, 38),
-            color: "#959595",
-            type: "离线"
-          })
-        };
-
-        var clickIcon = {
-          1: new AMap.Icon({
-            image: "../../static/img/BJ^_1.png",
-            size: new AMap.Size(32, 38), //图标大小
-            imageSize: new AMap.Size(32, 38),
-            color: "#00bd74",
-            type: "正常"
-          }),
-          2: new AMap.Icon({
-            image: "../../static/img/BJ^_2.png",
-            size: new AMap.Size(32, 38), //图标大小
-            imageSize: new AMap.Size(32, 38),
-            color: "#f77a00",
-            type: "故障"
-          }),
-          3: new AMap.Icon({
-            image: "../../static/img/BJ^_3.png",
-            size: new AMap.Size(32, 38), //图标大小
-            imageSize: new AMap.Size(32, 38),
-            color: "#ea1446",
-            type: "超标"
-          }),
-          4: new AMap.Icon({
-            image: "../../static/img/BJ^_4.png",
-            size: new AMap.Size(32, 38), //图标大小
-            imageSize: new AMap.Size(32, 38),
-            color: "#959595",
-            type: "离线"
-          })
-        };
 
         new util._httpData(this, "Construction/GetHomeEquipment", {
           city_Id: _this.County_Id,
@@ -2441,7 +2386,67 @@ export default {
             _this.HomeEquipment = this.datas; //设备数据
 
             // _this.displayEquipment = this.data.SumCount;
+            preIcon = {
+              1: new AMap.Icon({
+                image: "../../static/img/BJ_1.png",
+                size: new AMap.Size(32, 38), //图标大小
+                imageSize: new AMap.Size(32, 38),
+                color: "#00bd74",
+                type: "正常"
+              }),
+              2: new AMap.Icon({
+                image: "../../static/img/BJ_2.png",
+                size: new AMap.Size(32, 38), //图标大小
+                imageSize: new AMap.Size(32, 38),
+                color: "#f77a00",
+                type: "故障"
+              }),
+              3: new AMap.Icon({
+                image: "../../static/img/BJ_3.png",
+                size: new AMap.Size(32, 38), //图标大小
+                imageSize: new AMap.Size(32, 38),
+                color: "#ea1446",
+                type: "超标"
+              }),
+              4: new AMap.Icon({
+                image: "../../static/img/BJ_4.png",
+                size: new AMap.Size(32, 38), //图标大小
+                imageSize: new AMap.Size(32, 38),
+                color: "#959595",
+                type: "离线"
+              })
+            };
 
+            clickIcon = {
+              1: new AMap.Icon({
+                image: "../../static/img/BJ^_1.png",
+                size: new AMap.Size(32, 38), //图标大小
+                imageSize: new AMap.Size(32, 38),
+                color: "#00bd74",
+                type: "正常"
+              }),
+              2: new AMap.Icon({
+                image: "../../static/img/BJ^_2.png",
+                size: new AMap.Size(32, 38), //图标大小
+                imageSize: new AMap.Size(32, 38),
+                color: "#f77a00",
+                type: "故障"
+              }),
+              3: new AMap.Icon({
+                image: "../../static/img/BJ^_3.png",
+                size: new AMap.Size(32, 38), //图标大小
+                imageSize: new AMap.Size(32, 38),
+                color: "#ea1446",
+                type: "超标"
+              }),
+              4: new AMap.Icon({
+                image: "../../static/img/BJ^_4.png",
+                size: new AMap.Size(32, 38), //图标大小
+                imageSize: new AMap.Size(32, 38),
+                color: "#959595",
+                type: "离线"
+              })
+            };
             var lnglats = this.datas;
 
             map.remove(markers);
@@ -2456,12 +2461,14 @@ export default {
                 map: map
               });
               markers.push(marker);
+
               marker.type = lnglats[i].IsOnLine
                 ? lnglats[i].RecordType_type
                 : 4;
               marker.IsOnLine = lnglats[i].IsOnLine;
-              marker.content = lnglats[i].equipment_name;
-              marker.Construction_name = lnglats[i].Construction_name;
+              marker.content = lnglats[i].Construction_name;
+              marker.equipment_name = lnglats[i].equipment_name;
+              // marker.Construction_name = lnglats[i].Construction_name;
               marker.equipment_Id = lnglats[i].equipment_Id;
               marker.construction_Id = lnglats[i].Construction_Id;
               // marker.on("mouseover", markerClick);
@@ -2518,19 +2525,21 @@ export default {
 
                 if (dataMarker) {
                   dataMarker.target.setIcon(preIcon[dataMarker.target.type]);
+                  dataMarker.Selection = false;
                 }
 
                 e.target.setIcon(clickIcon[this.type]);
+                e.Selection = true;
                 dataMarker = e;
                 // _this.information = true; //显示设备数据
-                _this.informationData.name = this.content;
+                _this.informationData.name = this.equipment_name;
 
                 $(_this.$refs.tcxx).hide(1000);
                 // $(_this.$refs.tcxx1).show(1000);
 
                 _this.collapsed = false;
               });
-
+              _this.FirstEquipmentData(marker.equipment_Id,{target:marker},true);
               // map.setFitView();
             }
             map.on("click", function(e) {
@@ -2764,7 +2773,7 @@ export default {
                     x2: 0,
                     y2: 1
                   },
-                  stops: [[0, "#ff0000"], [1, "#f600ff"]]
+                  stops: [[0, "#ff0000"], [1, "#ff8080"]] //f600ff
                 },
                 lineWidth: 2,
                 // states: {
@@ -2805,7 +2814,7 @@ export default {
                     x2: 0,
                     y2: 1
                   },
-                  stops: [[0, "#2f93fa"], [1, "#7ecef1"]]
+                  stops: [[0, "#007eff"], [1, "#7ecef1"]] // 2f93fa
                 },
                 name: "PM10",
                 data: types[type]
@@ -2820,7 +2829,7 @@ export default {
                     x2: 0,
                     y2: 1
                   },
-                  stops: [[0, "rgb(221 242 243)"], [1, "#ffffff99"]]
+                  stops: [[0, "#ddf2f3"], [1, "#ffffff99"]] // rgb(221 242 243)
                 },
                 marker: {
                   radius: 0
@@ -2840,7 +2849,7 @@ export default {
                     x2: 0,
                     y2: 1
                   },
-                  stops: [[0, "rgb(112, 192, 219)"], [1, "rgb(125, 210, 192)"]]
+                  stops: [[0, "#00ffb8"], [1, "#6afbdc"]] //  rgb(112, 192, 219)  rgb(125, 210, 192)
                 },
                 name: "PM2.5",
                 data: types[type]
@@ -3072,7 +3081,7 @@ export default {
                   x2: 0,
                   y2: 1
                 },
-                stops: [[0, "#ff0000"], [1, "#f600ff"]]
+                stops: [[0, "#ff0000"], [0, "#ff8080"]]
               },
               marker: {
                 radius: 0

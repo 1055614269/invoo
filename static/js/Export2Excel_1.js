@@ -179,7 +179,7 @@ export function export_json_to_excel({
     }
   }
   var range = header.length - 1;
-  dataInfo["A1"].s = {
+  var To = {
     font: {
       name: '宋体',
       sz: 14,
@@ -191,15 +191,18 @@ export function export_json_to_excel({
       vertical: "center",
       // hpt: 50
     }
-  };
-  dataInfo["A2"].s = {  //设置日期样式
+  }
+  var lt = {
     font: {
       name: '宋体',
       sz: 11,
       // color: {rgb: "#FFFF0000"},
       bold: false,
     }
-  };
+  }
+  // dataInfo["A1"].s = To;
+  // dataInfo["A2"].s = lt;
+
   dataInfo["B" + (title.length + 1)].s = style;
   dataInfo["A" + (title.length + 1)].s = style;
   dataInfo["C" + (title.length + 1)].s = style;
@@ -211,28 +214,27 @@ export function export_json_to_excel({
   dataInfo["I" + (title.length + 1)].s = style;
   dataInfo["J" + (title.length + 1)].s = style;
   dataInfo["K" + (title.length + 1)].s = style;
-  dataInfo["!merges"] = [{
-    s: {//s为开始
-      c: 0,//开始列
-      r: 0,//开始取值范围
-    },
-    e: {//e结束
-      c: range,//结束列
-      r: 0//结束范围
+  dataInfo["!merges"] = [];
+  for (var key in title) {
+    debugger
+    if (key === "0") {
+      dataInfo["A1"].s = To;
+    } else {
+      dataInfo["A" + (parseFloat(key) + 1)].s = lt;
     }
-  }, {//合并第一行数据[B2,C2,D2,E2]
-    s: {//s为开始
-      c: 0,//开始列
-      r: 1,//开始取值范围
-    },
-    e: {//e结束
-      c: range,//结束列
-      r: 1//结束范围
-    }
-  }
-  ];
 
-  for (const key in dataInfo) {
+    dataInfo["!merges"].push({
+      s: {//s为开始
+        c: 0,//开始列
+        r: parseFloat(key),//开始取值范围
+      },
+      e: {//e结束
+        c: range,//结束列
+        r: parseFloat(key)//结束范围
+      }
+    })
+  }
+  for (var key in dataInfo) {
 
     if (key.indexOf("B") != -1) {
       if (dataInfo[key].v > 500) {
