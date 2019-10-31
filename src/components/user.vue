@@ -21,14 +21,13 @@
     </a-dropdown>
     <a-modal title="资料修改" v-model="visible" @ok="handleOk" :bodyStyle="{padding:'5px'}">
       <div class="xgzl">
-        <div>昵称</div>
+        <div>名称</div>
         <div class="sr">
-          <a-input placeholder="昵称" defaultValue="PPT" />
+          <a-input placeholder="名称" defaultValue="PPT" />
         </div>
 
         <div>姓名</div>
         <div class="sr">
-          
           <a-input placeholder="姓名" defaultValue="王小勇" />
         </div>
 

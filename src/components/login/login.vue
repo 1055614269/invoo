@@ -6,7 +6,6 @@
       </div>
       <div style="border-left: 1px solid #CFCFCF">云和智慧环保监测系统</div>
     </div>
-
     <div class="login-user">
       <div class="user-logo">
         <img src="../../../static/img/login_1.png" />

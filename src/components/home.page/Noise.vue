@@ -91,7 +91,7 @@ export default {
             year: "%Y"
           },
           borderWidth: 1,
-          backgroundColor: "#ffffff99",
+          backgroundColor: "#ffffff",
           headerFormat:
             '<span style="font-size:10px">{point.key}</span><table>',
           pointFormat:
@@ -128,7 +128,7 @@ export default {
                 x2: 0,
                 y2: 1
               },
-              stops: [[0, "#2f93fa"], [1, "#7ecef1"]]
+              stops: [[0, "#007eff"], [1, "#7ecef1"]]
             },
             name: "噪声",
             data: []

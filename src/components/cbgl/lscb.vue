@@ -223,7 +223,12 @@
 
         <span slot="cz" slot-scope="cz, data">
           <a-dropdown>
-            <span style="font-size: 26px;cursor: default;">...</span>
+             <span class="an1" style="font-size: 24px;cursor: default;">
+              <b style="color:#2d75f0">·</b> 
+              <b style="color:red">·</b>
+              <b style="color:#00bd74">·</b>
+            </span>
+     
             <a-menu slot="overlay">
               <a-menu-item key="0">
                 <div target="_blank" rel="noopener noreferrer" @click="onCellClick(data)">处理意见</div>
@@ -264,8 +269,8 @@
     >
       <div>
         周期：{{device_details.ExceedingPeriod}}
-        <span class="f-right">
-          <a-icon class="t-tb" title="导出周数据" style="font-size:24px" type="cloud-download" />
+        <span class="f-right" >
+          <a-icon class="t-tb" title="导出周数据" style="font-size:24px;color: #d0d0d0;" type="cloud-download" />
         </span>
       </div>
       <div class="t-left t-right">
@@ -288,14 +293,33 @@
           <b class="red">{{device_details.ConstructionAVG}}</b>(dB)
         </span>-->
       </div>
-
       <a-tabs defaultActiveKey="1" @change="ChangeDateSwitch">
         <a-tab-pane
           v-for="(val,i) in device_details.equipmentDayList"
-          :tab="val.Record_Time.split('T')[0]"
+          :tab="val.Record_Time.split('T')[0]+' 周'+(i===0?'一':i===1?'二':i===2?'三':i===3?'四':i===4?'五':i===5?'六':i===6?'日':'')"
           :key="val.Record_Time.split('T')[0]"
         >
-          <a-spin :spinning="spinning">
+          <a-spin :spinning="spinning"> 
+             <div style="font-size: 12px;" class="t-center">
+              <b>TSP:</b>
+              <span>
+                平均值：
+                <b class="red">{{val.TSPAVG}}</b>(mg/m3)
+              </span>
+              <span>
+                最高值：
+                <b class="red">{{val.TSPMAX}}</b>(mg/m3)
+              </span>
+              <b>噪声:</b>
+              <span>
+                平均值：
+                <b class="red">{{val.noiseAVG}}</b>(dB)
+              </span>
+              <span>
+                最高值：
+                <b class="red">{{val.noiseMAX}}</b>(dB)
+              </span>
+            </div>
             <div style="position: relative; top: -20px;">
               <!-- 时间：{{val.Record_Time}} -->
               <span class="f-right">
@@ -315,7 +339,7 @@
                 />
                 <a-icon
                   class="t-tb"
-                  @click="exportToExcel(columns2,data2)"
+                  @click="exportToExcel(columns2,data2,device_details,val)"
                   title="导出数据"
                   type="download"
                 />
@@ -347,26 +371,7 @@
               <a-pagination :defaultPageSize="6" v-model="current2" :total="PageSize2" />
               </div>-->
             </div>
-            <div style="font-size: 12px;" class="t-left t-right">
-              <b>TSP:</b>
-              <span>
-                平均值：
-                <b class="red">{{val.TSPAVG}}</b>(mg/m3)
-              </span>
-              <span>
-                最高值：
-                <b class="red">{{val.TSPMAX}}</b>(mg/m3)
-              </span>
-              <b>噪声:</b>
-              <span>
-                平均值：
-                <b class="red">{{val.noiseAVG}}</b>(dB)
-              </span>
-              <span>
-                最高值：
-                <b class="red">{{val.noiseMAX}}</b>(dB)
-              </span>
-            </div>
+           
           </a-spin>
         </a-tab-pane>
         <!-- <a-tab-pane tab="周二" key="2">2</a-tab-pane>
@@ -389,7 +394,7 @@
       :footer="null"
       @change
     >
-      <a-timeline mode="alternate">
+      <a-timeline >
         <a-timeline-item>
           <a-icon slot="dot" type="clock-circle-o" style="font-size: 16px;" />处罚记录4
           <br />处罚记录4说明
@@ -452,7 +457,7 @@
       :footer="null"
       @change
     >
-      <a-timeline mode="alternate">
+      <a-timeline>
         <a-timeline-item>申诉记录1</a-timeline-item>
         <a-timeline-item>申诉记录2</a-timeline-item>
         <a-timeline-item>申诉记录3</a-timeline-item>
@@ -964,12 +969,18 @@ export default {
         this.GetDayEquipmentData(equipment_Id, Record_Time);
       }
     },
-    exportToExcel(columns, datalist) {
+    exportToExcel(columns, datalist, data, _d) {
       var tHeader = [];
       var filterVal = [];
       var data_list = [];
-      var name = "设备数据" + new Date().getTime();
-      var title = [["设备数据"], [new Date().Format("yyyy-MM-dd hh:mm:ss")]];
+      var name = "设备数据" + new Date().Format("yyyy-MM-dd hh:mm:ss");
+      var title = [
+      ["设备数据"], 
+      ["时间："+_d.Record_Time],//new Date().Format("yyyy-MM-dd hh:mm:ss")
+      ["所属工地："+data.Construction_name],
+      ["区域："+data.County_Id],
+      ["数据来源：杭州茵沃科技有限公司"],
+      ];
       columns.map(function(_d) {
         tHeader.push(_d.title);
         filterVal.push(_d.dataIndex);
@@ -987,7 +998,7 @@ export default {
 
         data_list.push(_d);
       });
-
+      debugger
       exportToExcel(tHeader, filterVal, data_list, name, title);
     },
     ChangeDateSwitch(key) {
@@ -1169,7 +1180,7 @@ export default {
         (this.yAxis = [
           {
             title: {
-              // text: "颗粒物(mg/m3)",
+              text: "颗粒物(mg/m3)",
               rotation: 0,
               align: "high",
               x: 30,
@@ -1178,7 +1189,7 @@ export default {
           },
           {
             title: {
-              // text: "噪声(dB)",
+              text: "噪声(dB)",
               rotation: 0,
               align: "high",
               x: -26,
@@ -1240,7 +1251,7 @@ export default {
             year: "%Y"
           },
           borderWidth: 1,
-          backgroundColor: "#ffffff99",
+          backgroundColor: "#ffffff",
           headerFormat:
             '<span style="font-size:10px">{point.key}</span><table>',
           pointFormat:
@@ -1279,7 +1290,7 @@ export default {
                 x2: 0,
                 y2: 1
               },
-              stops: [[0, "#ff0000"], [1, "#f600ff"]]
+              stops: [[0, "#ff0000"], [0, "#ff8080"]]
             },
             lineWidth: 2,
             // states: {
@@ -1318,7 +1329,7 @@ export default {
                 x2: 0,
                 y2: 1
               },
-              stops: [[0, "#2f93fa"], [1, "#7ecef1"]]
+              stops: [[0, "#007eff"], [1, "#7ecef1"]]
             },
             name: "PM10",
             data: []
@@ -1331,7 +1342,7 @@ export default {
                 x2: 0,
                 y2: 1
               },
-              stops: [[0, "rgb(221 242 243)"], [1, "#ffffff99"]]
+              stops: [[0, "#ddf2f3"], [1, "#ffffff99"]]
             },
             marker: {
               radius: 0
@@ -1351,7 +1362,7 @@ export default {
                 x2: 0,
                 y2: 1
               },
-              stops: [[0, "rgb(112, 192, 219)"], [1, "rgb(125, 210, 192)"]]
+              stops: [[0, "#00ffb8"], [1, "#6afbdc"]]
             },
             name: "PM2.5",
             data: []

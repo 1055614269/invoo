@@ -106,7 +106,12 @@
         </div>
         <div slot="recordTypeList" slot-scope="recordTypeList,data" style="line-height: 32px;">
           <a-dropdown>
-            <span style="font-size: 26px;cursor: default;">...</span>
+            <!-- <span style="font-size: 26px;cursor: default;">...</span> -->
+             <span class="an1" style="font-size: 24px;cursor: default;">
+              <b style="color:#2d75f0">·</b> 
+              <b style="color:red">·</b>
+              <b style="color:#00bd74">·</b>
+            </span>
             <a-menu slot="overlay">
               <a-menu-item key="1">
                 <div @click="showDrawer1(data)">设备列表</div>
