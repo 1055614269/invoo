@@ -30,7 +30,7 @@
     "vue-cookies": "^1.5.13",
     "vue-router": "^3.0.1",
     "vue-socket.io": "^3.0.7",
-    "xlsx": "^0.15.1",
+    "xlsx": "^0.17.0",
     "xlsx-style": "^0.8.13"
   },
   "devDependencies": {
